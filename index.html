@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DRIVEBOX | Auto oprema</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101010;color:white;font-family:Arial,sans-serif}
+header{background:#181818;padding:22px 16px;border-bottom:2px solid #e32636}
+.logo{font-size:30px;font-weight:900;letter-spacing:2px}
+.logo span{color:#e32636}
+header p{color:#aaa;margin:7px 0 0}
+.hero{text-align:center;padding:55px 18px;background:linear-gradient(120deg,#26090d,#111)}
+.hero h1{font-size:34px;margin:0 0 12px}
+.hero span{color:#ed2939}
+.hero p{color:#ccc}
+h2{padding:0 16px}
+.products{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}
+.product{background:#1c1c1c;border:1px solid #333;border-radius:12px;padding:12px}
+.photo{height:105px;background:#292929;border-radius:8px;display:grid;place-items:center;font-size:42px}
+.product h3{font-size:16px;min-height:38px}
+.price{color:#ff3949;font-weight:bold;font-size:19px}
+button{background:#e32636;color:white;border:0;padding:12px;border-radius:7px;font-weight:bold;width:100%;cursor:pointer}
+.cart{margin:18px 12px;padding:18px;background:#1c1c1c;border-radius:12px}
+.cart p{color:#ccc}
+footer{text-align:center;padding:25px;color:#888}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">DRIVE<span>BOX</span></div>
+  <p>Auto oprema za tvoj automobil</p>
+</header>
+<section class="hero">
+  <h1>UNAPREDI SVOJU <span>VOŽNJU</span></h1>
+  <p>Kvalitetna auto-oprema po odličnim cenama.</p>
+</section>
+<h2>Naši proizvodi</h2>
+<div class="products" id="products"></div>
+<section class="cart">
+  <h2>🛒 Tvoja korpa</h2>
+  <div id="cart">Korpa je prazna.</div>
+  <h3 id="total">Ukupno: 0 RSD</h3>
+  <p>Uskoro omogućavamo poručivanje i plaćanje pouzećem.</p>
+</section>
+<footer>© 2026 DRIVEBOX | Sva prava zadržana</footer>
+<script>
+const products=[
+{name:"Držač telefona",price:1290,icon:"📱"},
+{name:"LED ambijentalno osvetljenje",price:2490,icon:"💡"},
+{name:"Organizator za sedište",price:1590,icon:"🚘"},
+{name:"Kamera za vožnju",price:4990,icon:"📷"},
+{name:"Zaštitna navlaka",price:3890,icon:"🚗"},
+{name:"Set mikrofiber krpa",price:790,icon:"🧽"},
+{name:"USB-C auto punjač",price:1190,icon:"🔌"},
+{name:"Univerzalne patosnice",price:2990,icon:"🚙"}
+];
+let cart=[];
+const money=n=>n.toLocaleString("sr-RS")+" RSD";
+document.getElementById("products").innerHTML=products.map((p,i)=>`
+<div class="product">
+<div class="photo">${p.icon}</div>
+<h3>${p.name}</h3>
+<div class="price">${money(p.price)}</div>
+<br><button onclick="add(${i})">Dodaj u korpu</button>
+</div>`).join("");
+function add(i){cart.push(products[i]);render()}
+function render(){
+document.getElementById("cart").innerHTML=cart.length?
+cart.map((p,i)=>`<p>${p.name} — ${money(p.price)}
+<button onclick="removeItem(${i})">Ukloni</button></p>`).join("")
+:"Korpa je prazna.";
+document.getElementById("total").textContent=
+"Ukupno: "+money(cart.reduce((s,p)=>s+p.price,0));
+}
+function removeItem(i){cart.splice(i,1);render()}
+</script>
+</body>
+</html>
