@@ -22,7 +22,7 @@ function App() {
   async function loadProducts() {
     if (!supabase) { setLoading(false); return }
     setLoading(true)
-    const { data, error } = await supabase.from('products').select('*').eq('is_active', true).order('created_at', { ascending: false })
+    const { data, error } = await supabase.from('products').select('*').eq('active', true).order('created_at', { ascending: false })
     if (error) setNotice(`Greška pri učitavanju proizvoda: ${error.message}`)
     else setProducts(data || [])
     setLoading(false)
