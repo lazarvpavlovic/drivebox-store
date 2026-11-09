@@ -24,7 +24,10 @@ function App() {
     setLoading(true)
     const { data, error } = await supabase.from('products').select('*').eq('active', true).order('created_at', { ascending: false })
     if (error) setNotice(`Greška pri učitavanju proizvoda: ${error.message}`)
-    else setProducts(data || [])
+    else setProducts((data || []).map(item => ({
+  ...item,
+  price: Number(item.price)
+})))
     setLoading(false)
   }
 
@@ -93,7 +96,7 @@ function App() {
     const { error } = await supabase.from('products').insert({
       name: product.name,
       description: product.description,
-      price: Number(product.price),
+      price_rsd: Number(product.price),
       category: product.category,
       image_url: product.image_url || null,
       stock: Number(product.stock || 0),
