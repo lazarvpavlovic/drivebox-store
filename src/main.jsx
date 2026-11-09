@@ -26,7 +26,7 @@ function App() {
     if (error) setNotice(`Greška pri učitavanju proizvoda: ${error.message}`)
     else setProducts((data || []).map(item => ({
   ...item,
-  price: Number(item.price)
+  price: Number(item.price_rsd)
 })))
     setLoading(false)
   }
